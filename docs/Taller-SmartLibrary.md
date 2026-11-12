@@ -27,9 +27,9 @@ Reglas del negocio:
 
 ### Diagrama inicial anotado
 
-Hecho en Visual Paradigm (`docs/diagramas/SmartLibrary.vpp`, diagrama «1. Modelo inicial anotado»):
+Hecho en Visual Paradigm (`diagramas/SmartLibrary.vpp`, diagrama «1. Modelo inicial anotado»):
 
-![Modelo inicial anotado](diagramas/1.%20Modelo%20inicial%20anotado.png)
+![Modelo inicial anotado](../diagramas/1.%20Modelo%20inicial%20anotado.png)
 
 <details><summary>Versión en texto (Mermaid)</summary>
 
@@ -149,7 +149,7 @@ Las entidades `Estudiante`, `Libro` y `Prestamo` se mantienen como modelo del do
 
 Hecho en Visual Paradigm (diagrama «2. Modelo de clases por capas»), generado con Instant Reverse desde el código y completado con multiplicidades y dependencias:
 
-![Modelo de clases por capas](diagramas/2.%20Modelo%20de%20clases%20por%20capas.png)
+![Modelo de clases por capas](../diagramas/2.%20Modelo%20de%20clases%20por%20capas.png)
 
 <details><summary>Versión en texto (Mermaid)</summary>
 
@@ -303,7 +303,7 @@ Dirección de dependencias: **Controller → Service → Repository**. El contro
 
 Hecho en Visual Paradigm (diagrama «3. Secuencia POST /api/prestamos»). El fragmento `alt` muestra los dos caminos: préstamo exitoso (201) y libro no disponible (409).
 
-![Secuencia POST /api/prestamos](diagramas/3.%20Secuencia%20POST%20_api_prestamos.png)
+![Secuencia POST /api/prestamos](../diagramas/3.%20Secuencia%20POST%20_api_prestamos.png)
 
 <details><summary>Versión en texto (Mermaid)</summary>
 
