@@ -7,6 +7,9 @@ Taller guiado de Diseño de Software, cuarto semestre.
 
 📄 **Documento del taller (actividades 1–7, tablas y diagramas UML):** [docs/Taller-SmartLibrary.md](docs/Taller-SmartLibrary.md)
 
+🖼️ **Diagramas en Visual Paradigm:** proyecto [docs/diagramas/SmartLibrary.vpp](docs/diagramas/SmartLibrary.vpp) e imágenes PNG en [docs/diagramas](docs/diagramas)
+(modelo inicial anotado, modelo de clases por capas y secuencia de `POST /api/prestamos`).
+
 ## Tecnologías
 
 Java 21 · Spring Boot 3.3.5 · Maven · Spring Web · Spring Data JPA · Validation · H2

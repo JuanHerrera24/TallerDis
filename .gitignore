@@ -11,6 +11,11 @@ target/
 .project
 .settings/
 
+# Visual Paradigm (respaldos y bloqueo)
+*.vpp.bak_*
+*.vpp.lck
+*.lck
+
 # SO
 .DS_Store
 Thumbs.db

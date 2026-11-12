@@ -27,6 +27,12 @@ Reglas del negocio:
 
 ### Diagrama inicial anotado
 
+Hecho en Visual Paradigm (`docs/diagramas/SmartLibrary.vpp`, diagrama «1. Modelo inicial anotado»):
+
+![Modelo inicial anotado](diagramas/1.%20Modelo%20inicial%20anotado.png)
+
+<details><summary>Versión en texto (Mermaid)</summary>
+
 ```mermaid
 classDiagram
     direction LR
@@ -79,6 +85,8 @@ classDiagram
     note for Libro "Obs 2: setDisponible() deja que cualquiera\ncambie el estado. Mejor marcarPrestado()\npara proteger R1/R3."
     note for Prestamo "Obs 3: asociaciones, no composiciones:\nel préstamo no es dueño del ciclo de vida\ndel libro ni del estudiante."
 ```
+
+</details>
 
 **Observaciones sobre el modelo inicial**
 
@@ -138,6 +146,12 @@ Las entidades `Estudiante`, `Libro` y `Prestamo` se mantienen como modelo del do
 ---
 
 ## Actividad 3 · Modelo de clases por capas
+
+Hecho en Visual Paradigm (diagrama «2. Modelo de clases por capas»), generado con Instant Reverse desde el código y completado con multiplicidades y dependencias:
+
+![Modelo de clases por capas](diagramas/2.%20Modelo%20de%20clases%20por%20capas.png)
+
+<details><summary>Versión en texto (Mermaid)</summary>
 
 ```mermaid
 classDiagram
@@ -265,6 +279,8 @@ classDiagram
     Prestamo "0..*" --> "1" Libro : presta
 ```
 
+</details>
+
 ### Justificación de las relaciones
 
 | Relación | Tipo UML | Multiplicidad | Por qué |
@@ -284,6 +300,12 @@ Dirección de dependencias: **Controller → Service → Repository**. El contro
 ---
 
 ## Actividad 4 · Diagrama de secuencia de `POST /api/prestamos`
+
+Hecho en Visual Paradigm (diagrama «3. Secuencia POST /api/prestamos»). El fragmento `alt` muestra los dos caminos: préstamo exitoso (201) y libro no disponible (409).
+
+![Secuencia POST /api/prestamos](diagramas/3.%20Secuencia%20POST%20_api_prestamos.png)
+
+<details><summary>Versión en texto (Mermaid)</summary>
 
 ```mermaid
 sequenceDiagram
@@ -326,6 +348,8 @@ sequenceDiagram
         H-->>U: 409 Conflict + ErrorResponse
     end
 ```
+
+</details>
 
 Caminos de error adicionales (mismo patrón): si `findById` devuelve vacío, el servicio lanza `RecursoNoEncontradoException` y el manejador responde **404 Not Found**; si falta un id, la validación `@Valid` falla antes de llegar al servicio y se responde **400 Bad Request** (R4).
 
