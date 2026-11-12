@@ -292,7 +292,7 @@ classDiagram
 | `PrestamoController ..> PrestamoRequest / PrestamoResponse` | Dependencia | — | Solo aparecen como parámetro y retorno de un método; no se guardan. |
 | `PrestamoService ..> Prestamo` | Dependencia «create» | — | El servicio crea el préstamo dentro del método pero no lo conserva como atributo. |
 | `*Repository ..> Entidad` | Dependencia | — | El repositorio maneja la entidad por parámetro genérico, no la guarda como atributo. |
-| `JpaRepository <\|-- *Repository` | Generalización entre interfaces | — | Los repositorios son **interfaces** que extienden `JpaRepository`. No hay realización escrita por nosotros: Spring Data genera la implementación en ejecución. |
+| `JpaRepository <\|-- *Repository` | Generalización entre interfaces | — | Los repositorios son **interfaces** (marcadas `<<Interface>>` en el diagrama) que extienden `JpaRepository` de Spring Data. `JpaRepository` es una interfaz externa del framework, por eso no se dibuja en Visual Paradigm (sí aparece en la versión en texto). No hay realización escrita por nosotros: Spring Data genera la implementación en ejecución. |
 | `GestorPrestamos` | **Eliminada** | — | Sus responsabilidades se repartieron entre Controller, Service y Repository. |
 
 Dirección de dependencias: **Controller → Service → Repository**. El controlador nunca toca un repositorio y las entidades no dependen de ninguna capa.
@@ -350,6 +350,8 @@ sequenceDiagram
 ```
 
 </details>
+
+En el camino de error, `PrestamoController` no captura la excepción: Spring la entrega a `GlobalExceptionHandler.noDisponible()`, que arma el `409 Conflict`. Como ese manejador lo invoca el framework y no nuestro código, en el diagrama de Visual Paradigm el `409` se muestra saliendo del lado del controlador (la versión en texto lo muestra con su propia línea de vida). La transacción se revierte, así que no se crea préstamo.
 
 Caminos de error adicionales (mismo patrón): si `findById` devuelve vacío, el servicio lanza `RecursoNoEncontradoException` y el manejador responde **404 Not Found**; si falta un id, la validación `@Valid` falla antes de llegar al servicio y se responde **400 Bad Request** (R4).
 
@@ -437,7 +439,7 @@ El `@RestController` es un adaptador de la tecnología web: traduce HTTP a llama
 En la capa de negocio: `PrestamoService.registrarPrestamo()` la verifica, apoyándose en `Libro.estaDisponible()` (el estado vive en la entidad) y en `PrestamoRepository.existsByLibroIdAndActivoTrue()` (R5). No va en el controlador porque es una regla del negocio y no de HTTP, ni en el repositorio porque este solo accede a datos. Así la regla se cumple sin importar quién invoque el servicio y se prueba sin servidor web (ver `PrestamoServiceTest`).
 
 **¿Qué relaciones UML conservaron y cuáles modificaron?**
-Se conservaron las asociaciones `Prestamo 0..* → 1 Estudiante` y `Prestamo 0..* → 1 Libro`, sin agregación ni composición. Se eliminaron las asociaciones `GestorPrestamos 1 → 0..*` con las tres colecciones. Se añadieron asociaciones `1 → 1` entre capas (Controller → Service → Repositorios, por inyección), dependencias hacia los DTO y hacia `Prestamo` («create»), y generalización de los repositorios desde `JpaRepository`.
+Se conservaron las asociaciones `Prestamo 0..* → 1 Estudiante` y `Prestamo 0..* → 1 Libro`, sin agregación ni composición. Se eliminaron las asociaciones `GestorPrestamos 1 → 0..*` con las tres colecciones. Se añadieron asociaciones `1 → 1` entre capas (Controller → Service → Repositorios, por inyección), dependencias hacia los DTO y hacia `Prestamo` («create»), y generalización de los repositorios desde `JpaRepository` (interfaz de Spring Data). Las excepciones y su traducción a HTTP quedan como dependencias «throw» y «traduce a 404/409».
 
 **¿Cómo se comprueba la trazabilidad requisito → clase → operación → prueba?**
 
